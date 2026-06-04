@@ -12,7 +12,6 @@ import { modules } from "@/lib/modules";
 export default function Home() {
   const [activeModuleId, setActiveModuleId] = useState(modules[0].id);
   const [problemasSeleccionados, setProblemasSeleccionados] = useState<string[]>([]);
-  const [nichoSeleccionado, setNichoSeleccionado] = useState("");
   const currentModule = modules.find((m) => m.id === activeModuleId) ?? modules[0];
 
   return (
@@ -23,11 +22,11 @@ export default function Home() {
       ) : currentModule.id === "soluciones" ? (
         <SolucionesView module={currentModule} problemasSeleccionados={problemasSeleccionados} />
       ) : currentModule.id === "nicho" ? (
-        <NichoView module={currentModule} onNichoChange={setNichoSeleccionado} />
+        <NichoView module={currentModule} />
       ) : currentModule.id === "pricing" ? (
         <PricingView />
       ) : currentModule.id === "landing" ? (
-        <LandingView module={currentModule} nichoSeleccionado={nichoSeleccionado} />
+        <LandingView module={currentModule} />
       ) : (
         <ModuleView module={currentModule} />
       )}
