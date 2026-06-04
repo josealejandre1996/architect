@@ -36,15 +36,15 @@ export default function Home() {
       ) : currentModule.id === "signalcore" ? (
         <SignalCoreView module={currentModule} />
       ) : currentModule.id === "crm" ? (
-        <CRMView module={currentModule} />
+        <CRMView />
       ) : currentModule.id === "prospeccion" ? (
-        <ProspeccionView module={currentModule} />
+        <ProspeccionView />
       ) : currentModule.id === "scripts" ? (
-        <ScriptsView module={currentModule} />
+        <ScriptsView />
       ) : currentModule.id === "propuestas" ? (
-        <PropuestasView module={currentModule} />
+        <PropuestasView />
       ) : currentModule.id === "analizador" ? (
-        <AnalizadorView module={currentModule} />
+        <AnalizadorView />
       ) : (
         <ModuleView module={currentModule} />
       )}
