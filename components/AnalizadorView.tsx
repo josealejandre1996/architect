@@ -272,8 +272,8 @@ El resultado debe estar listo para implementar directamente. Usa el lenguaje y c
       <div style={{ marginBottom: "1.25rem" }}>
         <label style={{ ...labelStyle, marginBottom: "0.5rem" }}>Próximos 3 Pasos</label>
             placeholder="Ej: 1. Crear landing page para mi nicho"
-          style={{ ...inputStyle, resize: "none" as const, lineHeight: 1.7 }} />
-      </div>
+            rows={4}
+            style={{ ...inputStyle, resize: "none" as const, lineHeight: 1.7 }} />
 
       {/* Botones externos */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
