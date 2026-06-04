@@ -710,10 +710,3 @@ Sé directo, honesto y específico. Este análisis debe ser un punto de inflexi�
     buildUserPrompt: (v) =>
       `Descripción de la agencia: **${v.descripcion}**\n\nMétricas actuales: ${v.metricas}${v.desafios ? `\n\nPrincipales desafíos: ${v.desafios}` : ""}\n\nRealiza un diagnóstico completo y honesto con un plan de acción de 90 días.`,
   },
-,
-  { id: "crm", name: "CRM", description: "Gestiona tus leads y pipeline de ventas", accentColor: "#3b82f6", fields: [], systemPrompt: "", buildUserPrompt: () => "" },
-  { id: "prospeccion", name: "Prospección", description: "Encuentra leads de alta calidad", accentColor: "#8b5cf6", fields: [], systemPrompt: "", buildUserPrompt: () => "" },
-  { id: "scripts", name: "Scripts", description: "Scripts de venta por canal", accentColor: "#06b6d4", fields: [], systemPrompt: "", buildUserPrompt: () => "" },
-  { id: "propuestas", name: "Propuestas", description: "Propuestas comerciales que convierten", accentColor: "#22c55e", fields: [], systemPrompt: "", buildUserPrompt: () => "" },
-  { id: "analizador", name: "Analizador", description: "Analiza negocios y competencia", accentColor: "#f59e0b", fields: [], systemPrompt: "", buildUserPrompt: () => "" },
-];
