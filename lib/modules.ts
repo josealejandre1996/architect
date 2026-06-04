@@ -440,7 +440,7 @@ Incluye los mensajes completos, listos para usar. No plantillas genéricas.`,
   },
 
   {
-    id: "prospeccion",
+    id: "prospeccion_legacy",
     name: "Prospección",
     description: "Estrategias y mensajes de outreach que generan reuniones calificadas",
     accentColor: "#f97316",
