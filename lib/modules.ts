@@ -712,3 +712,4 @@ Sé directo, honesto y específico. Este análisis debe ser un punto de inflexi�
   },
 
 ];
+// v2
