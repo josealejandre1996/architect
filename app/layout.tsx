@@ -32,3 +32,4 @@ export default function RootLayout({
     </html>
   );
 }
+// jueves,  4 de junio de 2026, 23:12:17 CEST
