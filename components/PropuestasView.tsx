@@ -2,254 +2,160 @@
 
 import { useState } from "react";
 
+const TIPOS_CLIENTE = ["Gimnasio / Fitness", "Clínica dental", "Restaurante", "E-commerce", "Inmobiliaria", "Agencia de marketing", "Consultoría", "Otro negocio local"];
+const CANALES = ["Reunión presencial/Zoom", "Envío por email", "WhatsApp", "LinkedIn", "Presentación en evento"];
+const OBJETIVOS_RAPIDOS = ["Reducir cancelaciones", "Captar más leads", "Automatizar atención al cliente", "Aumentar ticket promedio", "Mejorar fidelización"];
+
 export default function PropuestasView() {
-  const [cliente, setCliente] = useState("");
-  const [nicho, setNicho] = useState("");
-  const [problema, setProblema] = useState("");
-  const [solucion, setSolucion] = useState("");
-  const [precio, setPrecio] = useState("");
-  const [modelo, setModelo] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState("");
-  const [copied, setCopied] = useState(false);
+  const [tipoCliente, setTipoCliente] = useState("");
+  const [canal, setCanal] = useState("");
+  const [objetivo, setObjetivo] = useState("");
+  const [resultado, setResultado] = useState("");
+  const [copiado, setCopiado] = useState(false);
 
-  const canGenerate = cliente && nicho && problema && solucion && precio && modelo;
+  const canGenerate = tipoCliente && canal && objetivo;
 
-  const handleGenerate = async () => {
-    setLoading(true);
-    setResult("");
-    try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          messages: [
-            {
-              role: "user",
-              content: `Eres un experto en propuestas comerciales de alto valor para agencias de IA. Redacta una propuesta profesional y persuasiva con la siguiente información:
+  const generarPrompt = () => {
+    const prompt = `Crea una presentación profesional para ${tipoCliente} que muestre cómo la IA puede transformar el negocio enfocándose en: ${objetivo}.
 
-Cliente: ${cliente}
-Nicho: ${nicho}
-Problema que resuelve: ${problema}
-Solución IA propuesta: ${solucion}
-Precio / inversión: ${precio}
-Modelo de cobro: ${modelo}
+El tono debe ser cercano, profesional y claro, enfocado en resultados, evitando tecnicismos.
+El estilo visual debe ser moderno y tecnológico, con diseño limpio, colores suaves y premium, espacio generoso y bullets claros.
+Canal de presentación: ${canal}.
 
-La propuesta debe incluir:
-1. Apertura que conecta con el dolor del cliente
-2. Por qué ahora (urgencia de mercado con IA)
-3. Solución específica con entregables claros
-4. ROI estimado / métricas de éxito
-5. Inversión y lo que incluye
-6. Garantía o condición de confianza
-7. Próximo paso claro (CTA)
+Estructura de la presentación:
 
-Tono: profesional pero accesible. Que el cliente sienta que lo entiendes. Máximo 500 palabras.`,
-            },
-          ],
-        }),
-      });
-      const data = await response.json();
-      const text = data.content?.map((c: { type: string; text?: string }) => c.text || "").join("") || "Error al generar";
-      setResult(text);
-    } catch {
-      setResult("Error al conectar con la IA. Intenta de nuevo.");
-    }
-    setLoading(false);
+SLIDE 1 - PORTADA
+Título impactante relacionado con ${objetivo} para ${tipoCliente}
+Subtítulo: "IA aplicada a resultados reales"
+
+SLIDE 2 - EL PROBLEMA ACTUAL
+3-4 dolores reales y específicos de ${tipoCliente}: falta de respuesta rápida, pérdida de clientes por falta de seguimiento, dificultad para atraer nuevos leads.
+
+SLIDE 3 - LO QUE ESTÁ COSTANDO NO RESOLVERLO
+Tiempo perdido, efectos en el equipo por sobrecarga, oportunidades comerciales que se pierden. Usa cifras estimadas cuando sea posible.
+
+SLIDE 4 - LA OPORTUNIDAD CON IA
+Automatización de la atención, inmediatez, escalabilidad, mejora de experiencia del cliente. Específico para ${tipoCliente}.
+
+SLIDE 5 - NUESTRA SOLUCIÓN
+Presentar como un "copiloto invisible del negocio", no un software. Apoya en atención al cliente, captación y fidelización.
+
+SLIDE 6 - CÓMO ACTÚA EN EL DÍA A DÍA
+3 ejemplos concretos de cómo funciona en el día a día de ${tipoCliente}.
+
+SLIDE 7 - TRANSFORMACIÓN ESPERABLE
+Antes vs Después: tabla comparativa con 4 situaciones reales de ${tipoCliente}.
+
+SLIDE 8 - POR QUÉ ESTE ENFOQUE ES DIFERENTE
+Enfoque especializado en ${tipoCliente}, soluciones personalizadas, evolutiva para adaptarse al mercado.
+
+SLIDE 9 - RESULTADOS ESPERABLES
+4 métricas concretas de mejora esperables en los primeros 90 días.
+
+SLIDE 10 - LLAMADO A LA ACCIÓN
+CTA claro y sin fricción. Ej: "Descubre cómo esto podría funcionar en tu negocio".`;
+
+    setResultado(prompt);
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(result);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const copiar = () => {
+    navigator.clipboard.writeText(resultado);
+    setCopiado(true);
+    setTimeout(() => setCopiado(false), 2000);
   };
 
   return (
     <div style={{ padding: "2rem", maxWidth: "960px" }}>
-      <div style={{ marginBottom: "1.5rem" }}>
-        <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fff", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#3b82f6", display: "inline-block" }} />
-          Propuestas
+      <div style={{ marginBottom: "2rem" }}>
+        <h1 style={{ fontSize: "1.75rem", fontWeight: 700, color: "#fff", display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.4rem" }}>
+          <span style={{ width: 11, height: 11, borderRadius: "50%", background: "#14b8a6", display: "inline-block" }} />
+          Propuesta (Presentación)
         </h1>
-        <p style={{ color: "#6b7280", fontSize: "0.9rem", marginTop: "0.25rem" }}>
-          Genera propuestas comerciales que convierten leads en clientes
+        <p style={{ color: "#6b7280", fontSize: "0.92rem" }}>Genera un prompt para crear tu presentación en Gamma</p>
+      </div>
+
+      {/* Info card */}
+      <div style={{ background: "#161b27", border: "1px solid #1e2535", borderRadius: "12px", padding: "1.5rem", marginBottom: "1.25rem" }}>
+        <h2 style={{ color: "#14b8a6", fontSize: "0.95rem", fontWeight: 600, marginBottom: "0.75rem" }}>¿Qué es esto?</h2>
+        <p style={{ color: "#9ca3af", fontSize: "0.88rem", lineHeight: 1.7, marginBottom: "0.5rem" }}>
+          Esta herramienta genera un <span style={{ color: "#14b8a6", fontWeight: 600 }}>prompt optimizado para Gamma</span> que crea presentaciones profesionales y persuasivas.
+        </p>
+        <p style={{ color: "#9ca3af", fontSize: "0.88rem", lineHeight: 1.7, marginBottom: "0.75rem" }}>
+          El prompt estructura toda la información de tu propuesta y la convierte en una presentación lista para usar con tus clientes.
+        </p>
+        <p style={{ color: "#6b7280", fontSize: "0.82rem", lineHeight: 1.6 }}>
+          💡 Gamma es una herramienta que crea presentaciones automáticamente. Solo pegas el prompt y obtienes una presentación profesional en segundos.
         </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem" }}>
-        {/* Left */}
-        <div style={{ background: "#161b27", border: "1px solid #1e2535", borderRadius: "12px", padding: "1.5rem" }}>
-          <p style={{ color: "#6b7280", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.08em", marginBottom: "1.25rem" }}>
-            DATOS DE LA PROPUESTA
-          </p>
+      {/* Config card */}
+      <div style={{ background: "#161b27", border: "1px solid #1e2535", borderRadius: "12px", padding: "1.5rem", marginBottom: "1.25rem" }}>
+        <h2 style={{ color: "#14b8a6", fontSize: "0.95rem", fontWeight: 600, marginBottom: "1.25rem" }}>Configuración de la Propuesta</h2>
 
-          {[
-            { label: "Nombre del cliente / empresa", value: cliente, setter: setCliente, placeholder: "Ej: Clínica Dental Sonrisas" },
-            { label: "Nicho / industria", value: nicho, setter: setNicho, placeholder: "Ej: Clínicas dentales en CDMX" },
-            { label: "Problema principal del cliente", value: problema, setter: setProblema, placeholder: "Ej: Pierden leads porque no contestan WhatsApp fuera de horario..." },
-            { label: "Solución IA propuesta", value: solucion, setter: setSolucion, placeholder: "Ej: Agente IA en WhatsApp que califica y agenda citas 24/7..." },
-          ].map(({ label, value, setter, placeholder }) => (
-            <div key={label} style={{ marginBottom: "0.9rem" }}>
-              <label style={{ color: "#9ca3af", fontSize: "0.82rem", display: "block", marginBottom: "0.4rem" }}>
-                {label} <span style={{ color: "#3b82f6" }}>*</span>
-              </label>
-              <textarea
-                value={value}
-                onChange={(e) => setter(e.target.value)}
-                placeholder={placeholder}
-                rows={2}
-                style={{
-                  width: "100%",
-                  background: "#0f1117",
-                  border: "1px solid #1e2535",
-                  borderRadius: "8px",
-                  color: "#e5e7eb",
-                  fontSize: "0.82rem",
-                  padding: "0.6rem 0.75rem",
-                  outline: "none",
-                  resize: "none",
-                  boxSizing: "border-box",
-                }}
-              />
-            </div>
-          ))}
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginBottom: "1.25rem" }}>
-            <div>
-              <label style={{ color: "#9ca3af", fontSize: "0.82rem", display: "block", marginBottom: "0.4rem" }}>
-                Precio <span style={{ color: "#3b82f6" }}>*</span>
-              </label>
-              <input
-                value={precio}
-                onChange={(e) => setPrecio(e.target.value)}
-                placeholder="Ej: $1,500 USD"
-                style={{
-                  width: "100%",
-                  background: "#0f1117",
-                  border: "1px solid #1e2535",
-                  borderRadius: "8px",
-                  color: "#e5e7eb",
-                  fontSize: "0.85rem",
-                  padding: "0.6rem 0.75rem",
-                  outline: "none",
-                  boxSizing: "border-box",
-                }}
-              />
-            </div>
-            <div>
-              <label style={{ color: "#9ca3af", fontSize: "0.82rem", display: "block", marginBottom: "0.4rem" }}>
-                Modelo de cobro <span style={{ color: "#3b82f6" }}>*</span>
-              </label>
-              <select
-                value={modelo}
-                onChange={(e) => setModelo(e.target.value)}
-                style={{
-                  width: "100%",
-                  background: "#0f1117",
-                  border: "1px solid #1e2535",
-                  borderRadius: "8px",
-                  color: modelo ? "#e5e7eb" : "#6b7280",
-                  fontSize: "0.82rem",
-                  padding: "0.6rem 0.75rem",
-                  outline: "none",
-                  cursor: "pointer",
-                }}
-              >
-                <option value="">Modelo...</option>
-                <option value="pago único + mantenimiento mensual">Pago único + mantenimiento</option>
-                <option value="suscripción mensual recurrente">Suscripción mensual</option>
-                <option value="setup + retainer mensual">Setup + retainer</option>
-                <option value="revenue share (% de resultados)">Revenue share</option>
-              </select>
-            </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+          <div>
+            <label style={{ color: "#9ca3af", fontSize: "0.82rem", display: "block", marginBottom: "0.4rem" }}>
+              Tipo de Cliente <span style={{ color: "#14b8a6" }}>*</span>
+            </label>
+            <select value={tipoCliente} onChange={(e) => setTipoCliente(e.target.value)}
+              style={{ width: "100%", background: "#0f1117", border: "1px solid #1e2535", borderRadius: "8px", color: tipoCliente ? "#e5e7eb" : "#6b7280", fontSize: "0.85rem", padding: "0.6rem 0.75rem", outline: "none", cursor: "pointer" }}>
+              <option value="">Selecciona el tipo de cliente...</option>
+              {TIPOS_CLIENTE.map(t => <option key={t} value={t}>{t}</option>)}
+            </select>
           </div>
-
-          <button
-            onClick={handleGenerate}
-            disabled={!canGenerate || loading}
-            style={{
-              width: "100%",
-              background: canGenerate && !loading ? "linear-gradient(135deg, #1d4ed8, #7c3aed)" : "#1e2535",
-              color: canGenerate && !loading ? "#fff" : "#4b5563",
-              border: "none",
-              borderRadius: "8px",
-              padding: "0.7rem",
-              fontSize: "0.9rem",
-              fontWeight: 600,
-              cursor: canGenerate && !loading ? "pointer" : "not-allowed",
-              transition: "all 0.2s",
-            }}
-          >
-            {loading ? "Redactando propuesta..." : "Generar con IA"}
-          </button>
+          <div>
+            <label style={{ color: "#9ca3af", fontSize: "0.82rem", display: "block", marginBottom: "0.4rem" }}>
+              Canal de Uso <span style={{ color: "#14b8a6" }}>*</span>
+            </label>
+            <select value={canal} onChange={(e) => setCanal(e.target.value)}
+              style={{ width: "100%", background: "#0f1117", border: "1px solid #1e2535", borderRadius: "8px", color: canal ? "#e5e7eb" : "#6b7280", fontSize: "0.85rem", padding: "0.6rem 0.75rem", outline: "none", cursor: "pointer" }}>
+              <option value="">Selecciona el canal...</option>
+              {CANALES.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </div>
         </div>
 
-        {/* Right */}
-        <div style={{ background: "#161b27", border: "1px solid #1e2535", borderRadius: "12px", padding: "1.5rem", display: "flex", flexDirection: "column" }}>
-          <p style={{ color: "#6b7280", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.08em", marginBottom: "1rem" }}>
-            PROPUESTA COMERCIAL
-          </p>
-          {!result && !loading && (
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
-              <div style={{ fontSize: "2rem" }}>📄</div>
-              <p style={{ color: "#4b5563", fontSize: "0.85rem", textAlign: "center" }}>
-                Completa los datos y haz clic en{" "}
-                <span style={{ color: "#6b7280" }}>Generar con IA</span>
-              </p>
-            </div>
-          )}
-          {loading && (
-            <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <div style={{ color: "#6b7280", fontSize: "0.9rem" }}>📋 Construyendo tu propuesta...</div>
-            </div>
-          )}
-          {result && !loading && (
-            <>
-              <div
-                style={{
-                  flex: 1,
-                  background: "#0f1117",
-                  border: "1px solid #1e2535",
-                  borderRadius: "8px",
-                  padding: "1rem",
-                  color: "#d1d5db",
-                  fontSize: "0.82rem",
-                  lineHeight: 1.7,
-                  overflowY: "auto",
-                  whiteSpace: "pre-wrap",
-                  minHeight: "320px",
-                }}
-              >
-                {result}
-              </div>
-              <button
-                onClick={handleCopy}
-                style={{
-                  marginTop: "0.75rem",
-                  background: copied ? "#1a3a2a" : "#1e2535",
-                  border: `1px solid ${copied ? "#22c55e" : "#2d3748"}`,
-                  color: copied ? "#22c55e" : "#9ca3af",
-                  borderRadius: "6px",
-                  padding: "0.4rem 1rem",
-                  fontSize: "0.82rem",
-                  cursor: "pointer",
-                  alignSelf: "flex-start",
-                }}
-              >
-                {copied ? "✓ Copiado" : "Copiar propuesta"}
+        <div style={{ marginBottom: "0.75rem" }}>
+          <label style={{ color: "#9ca3af", fontSize: "0.82rem", display: "block", marginBottom: "0.5rem" }}>
+            Objetivo Específico <span style={{ color: "#6b7280", fontSize: "0.78rem" }}>(elige uno o escribe el tuyo)</span>
+          </label>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.6rem" }}>
+            {OBJETIVOS_RAPIDOS.map(o => (
+              <button key={o} onClick={() => setObjetivo(o)}
+                style={{ background: objetivo === o ? "#134e4a" : "#0f1117", border: `1px solid ${objetivo === o ? "#14b8a6" : "#1e2535"}`, borderRadius: "20px", padding: "0.3rem 0.8rem", color: objetivo === o ? "#14b8a6" : "#9ca3af", fontSize: "0.8rem", cursor: "pointer" }}>
+                {o}
               </button>
-            </>
-          )}
+            ))}
+          </div>
+          <input value={objetivo} onChange={(e) => setObjetivo(e.target.value)}
+            placeholder="Ej: Mostrar cómo reducir cancelaciones..."
+            style={{ width: "100%", background: "#0f1117", border: "1px solid #1e2535", borderRadius: "8px", color: "#e5e7eb", fontSize: "0.85rem", padding: "0.6rem 0.75rem", outline: "none", boxSizing: "border-box" }} />
         </div>
+
+        <button onClick={generarPrompt} disabled={!canGenerate}
+          style={{ width: "100%", background: canGenerate ? "#14b8a6" : "#1e2535", color: canGenerate ? "#000" : "#4b5563", border: "none", borderRadius: "8px", padding: "0.75rem", fontSize: "0.95rem", fontWeight: 700, cursor: canGenerate ? "pointer" : "not-allowed", marginTop: "0.5rem" }}>
+          Generar Prompt para Gamma
+        </button>
       </div>
 
-      <div style={{ background: "#161b27", border: "1px solid #1e2535", borderRadius: "10px", padding: "1rem", marginTop: "1rem" }}>
-        <p style={{ color: "#9ca3af", fontSize: "0.85rem" }}>
-          💡 <strong style={{ color: "#d1d5db" }}>Tip:</strong> Envía la propuesta en PDF con tu logo. Una propuesta bien presentada aumenta el precio percibido un 30%.
-        </p>
-      </div>
+      {/* Result */}
+      {resultado && (
+        <div style={{ background: "#161b27", border: "1px solid #1e2535", borderRadius: "12px", padding: "1.5rem" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+            <h2 style={{ color: "#14b8a6", fontSize: "0.95rem", fontWeight: 600 }}>Prompt Generado para Gamma</h2>
+            <button onClick={copiar}
+              style={{ background: copiado ? "#134e4a" : "#1e2535", border: `1px solid ${copiado ? "#14b8a6" : "#2d3748"}`, color: copiado ? "#14b8a6" : "#9ca3af", borderRadius: "6px", padding: "0.4rem 1rem", fontSize: "0.82rem", cursor: "pointer" }}>
+              {copiado ? "✓ Copiado" : "Copiar"}
+            </button>
+          </div>
+          <div style={{ background: "#0f1117", border: "1px solid #1e2535", borderRadius: "8px", padding: "1rem", color: "#d1d5db", fontSize: "0.82rem", lineHeight: 1.8, whiteSpace: "pre-wrap", maxHeight: "400px", overflowY: "auto" }}>
+            {resultado}
+          </div>
+          <p style={{ color: "#6b7280", fontSize: "0.8rem", marginTop: "0.75rem" }}>
+            💡 Copia este prompt y pégalo en <strong style={{ color: "#9ca3af" }}>gamma.app</strong> → "Crear con IA" para generar tu presentación automáticamente.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
