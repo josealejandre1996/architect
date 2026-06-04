@@ -710,3 +710,4 @@ Sé directo, honesto y específico. Este análisis debe ser un punto de inflexi�
     buildUserPrompt: (v) =>
       `Descripción de la agencia: **${v.descripcion}**\n\nMétricas actuales: ${v.metricas}${v.desafios ? `\n\nPrincipales desafíos: ${v.desafios}` : ""}\n\nRealiza un diagnóstico completo y honesto con un plan de acción de 90 días.`,
   },
+];
