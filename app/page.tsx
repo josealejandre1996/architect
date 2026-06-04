@@ -4,7 +4,6 @@ import Navigation from "@/components/Navigation";
 import ModuleView from "@/components/ModuleView";
 import ProblemasView from "@/components/ProblemasView";
 import SolucionesView from "@/components/SolucionesView";
-import NichoView from "@/components/NichoView";
 import { modules } from "@/lib/modules";
 
 export default function Home() {
@@ -14,13 +13,22 @@ export default function Home() {
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#0f0f13" }}>
-      <Navigation modules={modules} activeModule={activeModuleId} onModuleChange={setActiveModuleId} />
+      <Navigation
+        modules={modules}
+        activeModule={activeModuleId}
+        onModuleChange={setActiveModuleId}
+      />
       {currentModule.id === "problemas" ? (
-        <ProblemasView module={currentModule} seleccionados={problemasSeleccionados} onSeleccionChange={setProblemasSeleccionados} />
+        <ProblemasView
+          module={currentModule}
+          seleccionados={problemasSeleccionados}
+          onSeleccionChange={setProblemasSeleccionados}
+        />
       ) : currentModule.id === "soluciones" ? (
-        <SolucionesView module={currentModule} problemasSeleccionados={problemasSeleccionados} />
-      ) : currentModule.id === "nicho" ? (
-        <NichoView module={currentModule} />
+        <SolucionesView
+          module={currentModule}
+          problemasSeleccionados={problemasSeleccionados}
+        />
       ) : (
         <ModuleView module={currentModule} />
       )}
