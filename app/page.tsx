@@ -18,7 +18,7 @@ import { modules } from "@/lib/modules";
 export default function Home() {
   const [activeModuleId, setActiveModuleId] = useState(modules[0].id);
   const [problemasSeleccionados, setProblemasSeleccionados] = useState<string[]>([]);
-  const currentModule = modules.find((m) => m.id === activeModuleId) ?? modules[0];
+  const currentModule = modules.find((m) => m.id === activeModuleId) || modules[0];
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#0f0f13" }}>
