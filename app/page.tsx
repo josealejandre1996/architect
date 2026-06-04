@@ -1,13 +1,12 @@
 "use client";
-
 import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import ModuleView from "@/components/ModuleView";
+import ProblemasView from "@/components/ProblemasView";
 import { modules } from "@/lib/modules";
 
 export default function Home() {
   const [activeModuleId, setActiveModuleId] = useState(modules[0].id);
-
   const currentModule = modules.find((m) => m.id === activeModuleId) ?? modules[0];
 
   return (
@@ -17,7 +16,11 @@ export default function Home() {
         activeModule={activeModuleId}
         onModuleChange={setActiveModuleId}
       />
-      <ModuleView module={currentModule} />
+      {currentModule.id === "problemas" ? (
+        <ProblemasView module={currentModule} />
+      ) : (
+        <ModuleView module={currentModule} />
+      )}
     </div>
   );
 }
