@@ -55,7 +55,7 @@ export default function AnalizadorView() {
   const lbl = { color: "#9ca3af", fontSize: "0.82rem", display: "block", marginBottom: "0.4rem" };
 
   return (
-    <div style={{ paddingTop: "5rem", padding: "2rem", maxWidth: "960px" }}>
+    <div style={{ padding: "2rem", paddingTop: "5rem", maxWidth: "960px" }}>
       <div style={{ marginBottom: "1.5rem" }}>
         <h1 style={{ fontSize: "1.75rem", fontWeight: 700, color: "#fff", display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.4rem" }}>
           <span style={{ width: 11, height: 11, borderRadius: "50%", background: "#a855f7", display: "inline-block" }} />

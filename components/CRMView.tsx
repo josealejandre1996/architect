@@ -82,7 +82,7 @@ export default function CRMView() {
   };
 
   return (
-    <div style={{ paddingTop: "5rem", padding: "2rem", maxWidth: "860px" }}>
+    <div style={{ padding: "2rem", paddingTop: "5rem", maxWidth: "860px" }}>
       <div style={{ marginBottom: "1.5rem" }}>
         <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: "#fff", display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#3b82f6", display: "inline-block" }} />
